@@ -2,7 +2,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const os = require('node:os')
 const path = require('node:path')
-const { execFileSync } = require('node:child_process')
+const { execFileSync, spawnSync } = require('node:child_process')
 
 const repository = path.resolve(__dirname, '..')
 const example = path.join(repository, 'example')
@@ -24,12 +24,15 @@ for (const root of ['/', '/notes/']) {
     fs.mkdirSync(path.join(site, 'themes'))
     execFileSync('git', ['clone', '--quiet', '--local', '--', repository, path.join(site, 'themes', 'asterxu')])
 
-    const log = execFileSync(process.execPath, [hexo, 'generate'], {
+    const build = spawnSync(process.execPath, [hexo, 'generate'], {
       cwd: site,
       encoding: 'utf8',
       timeout: 30000,
       env: { ...process.env, TZ: 'UTC' }
     })
+    if (build.error) throw build.error
+    const log = build.stdout + build.stderr
+    assert.equal(build.status, 0, log)
     assert.doesNotMatch(log, /\b(?:ERROR|FATAL)\b/)
     assert.doesNotMatch(log, /Use _config\.asterxu|建议在 _config\.asterxu/)
 

@@ -8,6 +8,7 @@
     "layout",
     "scripts",
     "source",
+    "templates",
     "_config.yml"
   ],
   "repository": {
