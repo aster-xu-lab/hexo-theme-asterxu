@@ -1,0 +1,33 @@
+<%
+page.layout = 'categories'
+page.hide_banner = true
+page.title = theme.category.title || __('category.title')
+page.subtitle = theme.category.subtitle || __('category.subtitle')
+page.banner_img = theme.category.banner_img
+page.banner_img_height = theme.category.banner_img_height
+page.banner_mask_alpha = theme.category.banner_mask_alpha
+var curCats = site.categories.filter(cat => cat.length).data.sort(function (a, b) { return b.length - a.length })
+%>
+
+<div class="ax-page ax-list">
+  <section class="ax-hero ax-hero--slim" aria-labelledby="ax-cats-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow">分类</p>
+      <h1 class="ax-title ax-title--small" id="ax-cats-title">分类</h1>
+      <p class="ax-lead">共 <%= curCats.length %> 个分类，按篇数排列。</p>
+    </div>
+  </section>
+
+  <section class="ax-section">
+    <div class="ax-container">
+      <div class="ax-cats">
+        <% curCats.forEach(function (cat) { %>
+          <a class="ax-cats__item" href="<%= url_for(cat.path) %>">
+            <span class="ax-cats__name"><%= cat.name.trim() %></span>
+            <span class="ax-cats__count"><%= cat.posts.length %></span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</div>

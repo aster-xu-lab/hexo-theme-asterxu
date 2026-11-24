@@ -1,0 +1,136 @@
+<%
+page.hide_banner = true
+page.banner_img = page.banner_img || theme.post.banner_img
+page.banner_img_height = page.banner_img_height || theme.post.banner_img_height
+page.banner_mask_alpha = page.banner_mask_alpha || theme.post.banner_mask_alpha
+%>
+
+<svg class="ax-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="ax-ico-category" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <rect x="4" y="4" width="6.5" height="6.5" rx="1.2"></rect>
+      <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"></rect>
+      <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"></rect>
+      <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"></rect>
+    </g>
+  </symbol>
+  <symbol id="ax-ico-tag" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 4.5h6l9 9-6 6-9-9z"></path>
+      <circle cx="8.5" cy="8.5" r="1.2"></circle>
+    </g>
+  </symbol>
+</svg>
+
+<div class="container-full-width nopadding-x ax-page ax-post">
+  <div class="row nomargin-x ax-post-row">
+    <div class="side-col ax-post-aside d-none d-lg-block col-lg-2">
+      <%- inject_point('postLeft') %>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md ax-post-main">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <header class="ax-post-head">
+            <p class="ax-eyebrow"><%= page.categories && page.categories.length ? page.categories.map(function (c) { return c.name }).join(' / ') : '文章' %></p>
+            <h1 class="ax-post-head__title"><%= page.title %></h1>
+            <div class="ax-post-head__meta">
+              <%- inject_point('postMetaTop') %>
+            </div>
+            <% var series = typeof series_for_post === 'function' && series_for_post(page.path) %>
+            <% if (series) { %>
+              <p class="ax-post-series">所属系列：<a href="<%= url_for('/series/' + series.seriesId + '/') %>"><%= series.seriesTitle %></a></p>
+            <% } %>
+          </header>
+          <% if (theme.post.toc.enable && page.toc !== false) { %>
+            <details class="ax-mobile-toc d-lg-none" id="mobile-toc" hidden>
+              <summary><%= __('post.toc') %></summary>
+            </details>
+          <% } %>
+          <article class="post-content ax-prose">
+            <p id="seo-header"><%= page.subtitle || page.title %></p>
+            <% if (theme.post.updated.enable && theme.post.updated && compare_date(page.date, page.updated)) { %>
+              <p id="updated-time" class="note note-<%= theme.post.updated.note_class || 'info' %>" style="<%= theme.post.updated.relative ? 'display: none' : '' %>">
+                <% if (theme.post.updated.relative) { %>
+                  <% if (theme.post.updated.content) { %>
+                    <!-- compatible with older versions-->
+                    <%- theme.post.updated.content %><%- date(page.updated, 'YYYY-MM-DDTHH:mm:ssZ') %>
+                  <% } else { %>
+                    <%- __('post.updated', date(page.updated, 'YYYY-MM-DDTHH:mm:ssZ')) %>
+                  <% } %>
+                  <%- partial('_partials/plugins/moment.ejs') %>
+                <% } else { %>
+                  <% if (theme.post.updated.content) { %>
+                    <!-- compatible with older versions-->
+                    <%- theme.post.updated.content %><%- date(page.updated, theme.post.updated.date_format) %>
+                  <% } else { %>
+                    <%- __('post.updated', date(page.updated, theme.post.updated.date_format)) %>
+                  <% } %>
+                <% } %>
+              </p>
+            <% } %>
+            <% if (page.encrypt === true) { %>
+              <%- inject_point('postMarkdownBegin') %>
+              <%- page.content %>
+              <%- partial('_partials/plugins/encrypt') %>
+              <%- inject_point('postMarkdownEnd') %>
+            <% } else { %>
+              <div class="markdown-body">
+                <%- inject_point('postMarkdownBegin') %>
+                <%- page.content %>
+                <%- inject_point('postMarkdownEnd') %>
+              </div>
+            <% } %>
+            <div>
+              <%- inject_point('postMetaBottom') %>
+
+              <%- inject_point('postCopyright') %>
+
+              <% if (theme.post.prev_next.enable && !page.hide) { %>
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    <% const prev = prev_post(page) %>
+                    <% if (prev) { %>
+                      <a href="<%= url_for(prev.path) %>" title="<%= prev.title %>">
+                        <svg class="ax-inline-ico ax-prevnext-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-arrow-left"></use></svg>
+                        <span class="hidden-mobile"><%= prev.title %></span>
+                        <span class="visible-mobile"><%- __('post.prev_post') %></span>
+                      </a>
+                    <% } %>
+                  </article>
+                  <article class="post-next col-6">
+                    <% const next = next_post(page) %>
+                    <% if (next) { %>
+                      <a href="<%= url_for(next.path) %>" title="<%= next.title %>">
+                        <span class="hidden-mobile"><%= next.title %></span>
+                        <span class="visible-mobile"><%- __('post.next_post') %></span>
+                        <svg class="ax-inline-ico ax-prevnext-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-arrow-right"></use></svg>
+                      </a>
+                    <% } %>
+                  </article>
+                </div>
+              <% } %>
+            </div>
+
+            <%- inject_point('postComments') %>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      <%- inject_point('postRight') %>
+    </div>
+  </div>
+</div>
+
+<%- partial('_partials/markdown-plugins') %>
+
+<% if(theme.post.custom && theme.post.custom.enable && theme.post.custom.content && page.custom !== false) { %>
+  <!-- Custom -->
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <%- page.custom || theme.post.custom.content %>
+    </div>
+  </div>
+<% } %>

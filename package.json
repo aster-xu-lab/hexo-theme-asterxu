@@ -1,0 +1,41 @@
+{
+  "name": "hexo-theme-asterxu",
+  "version": "1.9.9",
+  "description": "A Hexo theme with local search and responsive article layouts.",
+  "main": "package.json",
+  "files": [
+    "languages",
+    "layout",
+    "scripts",
+    "source",
+    "_config.yml"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aster-xu-lab/hexo-theme-asterxu.git"
+  },
+  "keywords": [
+    "hexo",
+    "theme",
+    "material"
+  ],
+  "author": "AsterXu",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://aster-xu-lab.github.io/",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "peerDependencies": {
+    "hexo": "^8.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-stylus": "^3.0.0"
+  },
+  "dependencies": {
+    "@adobe/css-tools": "^4.3.3",
+    "hexo-pagination": "^3.0.0",
+    "hexo-util": "^4.0.0",
+    "highlight.js": "^11.11.1",
+    "moment": "^2.30.1",
+    "nunjucks": "^3.2.4"
+  }
+}

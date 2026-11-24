@@ -1,0 +1,8 @@
+<%
+if (theme.code.copy_btn) {
+  %><span class="sr-only" id="code-copy-status" role="status"></span><%
+  import_script(`<script src="${url_join(theme.static_prefix.clipboard, 'clipboard.min.js')}"></script>`)
+}
+import_script(`<script>AsterXuTheme.plugins.codeWidget();</script>
+`)
+%>

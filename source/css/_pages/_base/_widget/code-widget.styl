@@ -1,0 +1,47 @@
+.code-widget
+  display inline-block
+  background-color transparent
+  font-size .75rem
+  line-height 1
+  font-weight bold
+  padding .3rem .1rem .1rem .1rem
+  position absolute
+  right .45rem
+  top .15rem
+  z-index 1
+
+.code-widget-light
+  color #999
+
+.code-widget-dark
+  color #bababa
+
+.copy-btn
+  cursor pointer
+  user-select none
+  -webkit-appearance none
+  background-color transparent
+  border 0
+  font-family inherit
+  outline none
+
+  & > .ax-inline-ico
+    width .75rem
+    height .75rem
+    margin-right .15rem
+    opacity 0
+    transition opacity .2s ease-in-out
+
+  &:focus > .ax-inline-ico
+    opacity 0.9
+
+  &:focus-visible
+    outline 2px solid currentColor
+    outline-offset 2px
+
+.markdown-body pre:hover > .copy-btn > .ax-inline-ico
+  opacity 0.9
+
+@media (hover: none)
+  .markdown-body pre > .copy-btn > .ax-inline-ico
+    opacity 0.9

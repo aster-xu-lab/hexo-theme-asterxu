@@ -1,0 +1,54 @@
+<%
+page.hide_banner = true
+page.hide_avatar = true
+page.layout = "about"
+page.title = page.title || __('about.title')
+page.subtitle = ''
+%>
+
+<svg class="ax-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="ax-star" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M12 2.8v18.4"></path>
+      <path d="M4.03 7.4l15.94 9.2"></path>
+      <path d="M19.97 7.4L4.03 16.6"></path>
+    </g>
+  </symbol>
+</svg>
+
+<div class="ax-page ax-about">
+  <section class="ax-hero" aria-labelledby="ax-about-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow"><%= page.title %></p>
+      <h1 class="ax-title ax-title--small" id="ax-about-title">
+        <svg class="ax-mark" width="32" height="32" aria-hidden="true" focusable="false"><use href="#ax-star"></use></svg>
+        <span><%= theme.about.name || config.author || config.title %></span>
+      </h1>
+      <% if (page.lead || theme.about.intro) { %>
+        <p class="ax-lead"><%= page.lead || theme.about.intro %></p>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="ax-section">
+    <div class="ax-container ax-about-body ax-prose">
+      <article class="markdown-body">
+        <%- page.content %>
+      </article>
+
+      <% if(page.comments) { %>
+        <article id="comments">
+          <% var type %>
+          <% if (typeof page.comment === 'string' && page.comment !== '') { %>
+            <% type = '_partials/comments/' + page.comment %>
+          <% } else { %>
+            <% type = '_partials/comments/' + theme.post.comments.type %>
+          <% } %>
+          <%- partial(type) %>
+        </article>
+      <% } %>
+    </div>
+  </section>
+</div>
+
+<%- partial('_partials/markdown-plugins') %>

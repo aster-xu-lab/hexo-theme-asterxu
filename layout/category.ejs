@@ -1,0 +1,19 @@
+<%
+page.layout = "category"
+page.hide_banner = true
+page.title = [__('category.title'), page.category].join(" - ")
+page.subtitle = [__('category.subtitle'), page.category].join(" - ")
+page.banner_img = theme.category.banner_img
+page.banner_img_height = theme.category.banner_img_height
+page.banner_mask_alpha = theme.category.banner_mask_alpha
+
+var cat = site.categories.find({name: page.category}).filter(cat => cat.length).data[0]
+var catTotal = cat ? cat.posts.length : 0
+%>
+
+<%- partial('_partials/archive-list.ejs', { params: {
+  key: page.layout,
+  eyebrow: '分类',
+  heading: page.category,
+  lead: '共 ' + catTotal + ' 篇文章，按年份倒序。'
+} }) %>

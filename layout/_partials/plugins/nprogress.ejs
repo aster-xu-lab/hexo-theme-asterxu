@@ -1,0 +1,17 @@
+<% if (theme.fun_features.progressbar && theme.fun_features.progressbar.enable){ %>
+  <%- js_ex(theme.static_prefix.nprogress, 'nprogress.min.js') %>
+  <%- css_ex(theme.static_prefix.nprogress, 'nprogress.min.css') %>
+
+  <script>
+    NProgress.configure(<%- JSON.stringify(Object.assign({}, theme.fun_features.progressbar.options, {
+      barSelector: '.bar',
+      spinnerSelector: '.spinner',
+      template: '<div class="bar" aria-hidden="true"><div class="peg"></div></div>' +
+        '<div class="spinner" aria-hidden="true"><div class="spinner-icon"></div></div>'
+    })) %>)
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+<% } %>

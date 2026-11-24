@@ -1,0 +1,1365 @@
+// AsterXu 页面样式
+
+@import "ax-tokens"
+
+// ---------------------------------------------------------------------------
+// 页面容器、导航与移动端菜单
+// ---------------------------------------------------------------------------
+
+body:has(.ax-page) main > .container
+  width 100%
+  max-width none
+  margin 0
+  padding 0
+
+#board:has(.ax-page)
+  position relative
+  width 100%
+  margin-top 68px !important
+  padding 0
+  background var(--ax-bg)
+  border-radius 0
+  box-shadow none
+
+#board:has(.ax-page) > .container,
+#board:has(.ax-page) > .container > .row,
+#board:has(.ax-page) > .container > .row > div
+  width 100%
+  max-width 100%
+  padding 0
+
+#board:has(.ax-page) > .container > .row
+  margin 0
+
+#board:has(.ax-page) > .container > .row > div
+  flex 0 0 100%
+  margin 0 !important
+
+body:has(.ax-page)
+  background var(--ax-bg)
+  overflow-x hidden
+
+body:has(.ax-page) #navbar
+  height 68px
+  padding-left 0
+  padding-right 0
+  background-color var(--ax-bg)
+  box-shadow none
+  border-bottom 1px solid var(--ax-line)
+
+// 导航容器与内容栅格同宽同内边距，保证品牌文字与正文左边缘对齐
+body:has(.ax-page) #navbar .container
+  width 100%
+  max-width 1180px
+  padding-left 24px
+  padding-right 24px
+
+body:has(.ax-page) #navbar .navbar-collapse
+  gap 16px
+
+body:has(.ax-page) #navbar.top-nav-collapse,
+body:has(.ax-page) #navbar.scrolling-navbar
+  background-color var(--ax-bg)
+
+body:has(.ax-page) #navbar .navbar-brand
+  color var(--ax-ink)
+  font-size 1rem
+  font-weight 600
+  letter-spacing -.01em
+
+body:has(.ax-page) #navbar .navbar-brand strong
+  font-weight 600
+
+body:has(.ax-page) #navbar .navbar-nav
+  gap 2px
+
+body:has(.ax-page) #navbar .nav-item .nav-link
+  display inline-flex
+  align-items center
+  gap 6px
+  color var(--ax-ink)
+  padding 8px 10px
+  white-space nowrap
+
+body:has(.ax-page) #navbar .navbar-toggler .animated-icon span
+  background-color var(--ax-ink)
+
+body:has(.ax-page) #navbar .nav-item .nav-link i
+  color var(--ax-ink)
+  font-size .9375rem
+
+body:has(.ax-page) #navbar .nav-item .nav-link.active,
+body:has(.ax-page) #navbar .nav-item .nav-link[aria-current="page"],
+body:has(.ax-page) #navbar .nav-item .nav-link.active i,
+body:has(.ax-page) #navbar .nav-item .nav-link[aria-current="page"] i
+  color var(--ax-accent)
+
+@media (hover: hover)
+  body:has(.ax-page) #navbar .navbar-brand:hover,
+  body:has(.ax-page) #navbar .nav-item .nav-link:hover,
+  body:has(.ax-page) #navbar .nav-item .nav-link:hover i
+    color var(--ax-accent)
+
+body:has(.ax-page) #navbar .ax-actions
+  display flex
+  align-items center
+  gap 4px
+  margin-left 6px
+
+body:has(.ax-page) #navbar .ax-iconbtn
+  display inline-flex
+  align-items center
+  justify-content center
+  width 36px
+  height 36px
+  padding 0
+  border 0
+  border-radius var(--ax-radius-chip)
+  background-color transparent
+  color var(--ax-ink)
+  text-decoration none
+  cursor pointer
+  transition color .2s ease, background-color .2s ease
+
+  i
+    font-size 1.125rem
+    line-height 1
+
+  &:hover
+    background-color var(--ax-tint)
+    color var(--ax-accent)
+
+body:has(.ax-page) #navbar .nav-item .nav-link .ax-nav-ico
+  width 15px
+  height 15px
+  flex none
+
+body:has(.ax-page) #navbar .ax-iconbtn .ax-nav-ico
+  width 18px
+  height 18px
+
+body:has(.ax-page) #navbar .ax-theme__moon,
+body:has(.ax-page) #mobile-grid-menu .ax-theme__moon
+  display none
+
+[data-user-color-scheme="dark"] body:has(.ax-page) #navbar .ax-theme__sun,
+[data-user-color-scheme="dark"] body:has(.ax-page) #mobile-grid-menu .ax-theme__sun
+  display none
+
+[data-user-color-scheme="dark"] body:has(.ax-page) #navbar .ax-theme__moon,
+[data-user-color-scheme="dark"] body:has(.ax-page) #mobile-grid-menu .ax-theme__moon
+  display block
+
+body:has(.ax-page) #scroll-top-button
+  display none
+
+body:has(.ax-page) #mobile-grid-menu
+  background-color var(--ax-bg)
+
+// 移动端菜单卡片与页面栅格对齐
+body:has(.ax-page) #mobile-grid-menu .container
+  padding-left 12px
+  padding-right 12px
+
+body:has(.ax-page) #mobile-grid-menu .row
+  margin-left 0
+  margin-right 0
+
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-item
+  background-color var(--ax-surface)
+  border 1px solid var(--ax-line)
+
+// 工具区（GitHub / 搜索 / 深色）与导航卡片留出分组间距
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-cell--tool
+  margin-top 8px
+
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-item i
+  color var(--ax-accent)
+
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-item .ax-nav-ico
+  width 18px
+  height 18px
+  margin-bottom .4rem
+  color var(--ax-accent)
+
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-group-header .ax-nav-ico
+  width 15px
+  height 15px
+  margin-right .3rem
+  color var(--ax-accent)
+
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-item span,
+body:has(.ax-page) #mobile-grid-menu .mobile-grid-group-header,
+body:has(.ax-page) #mobile-grid-menu a
+  color var(--ax-ink)
+
+body:has(.ax-page) footer
+  border-top 1px solid var(--ax-line)
+  background var(--ax-bg)
+
+body:has(.ax-page) .footer-inner
+  padding 36px 24px
+  color var(--ax-quiet)
+  font-size .8125rem
+
+  a
+    color var(--ax-muted)
+    text-decoration underline
+    text-underline-offset 3px
+
+    &:hover
+      color var(--ax-accent)
+
+.ax-footer__brand
+  color var(--ax-ink)
+  font-weight 600
+
+.ax-footer__sep
+  margin 0 8px
+  color var(--ax-line)
+
+// ---------------------------------------------------------------------------
+// 排版基座
+// ---------------------------------------------------------------------------
+
+.ax-page
+  --text-color var(--ax-ink)
+  --sec-text-color var(--ax-muted)
+  --line-color var(--ax-line)
+  --board-bg-color var(--ax-bg)
+  color var(--ax-body)
+  text-align left
+  line-height 1.72
+
+.ax-container
+  width 100%
+  max-width 1180px
+  margin 0 auto
+  padding 0 24px
+
+.ax-eyebrow
+  display inline-flex
+  align-items center
+  gap 8px
+  margin 0 0 24px -14px
+  color var(--ax-muted)
+  font-size .8125rem
+  letter-spacing .08em
+
+  &::before
+    content ''
+    width 6px
+    height 6px
+    background var(--ax-accent)
+    border-radius 1px
+
+.ax-title
+  display flex
+  align-items center
+  gap 16px
+  margin 0
+  color var(--ax-ink)
+  font-size clamp(2.75rem, 8.5vw, 5.5rem)
+  font-weight 600
+  line-height .95
+  letter-spacing -.03em
+
+.ax-title .ax-mark
+  flex 0 0 auto
+  color var(--ax-accent)
+
+.ax-title--small
+  font-size clamp(2.25rem, 5vw, 3.5rem)
+
+.ax-lead
+  max-width 34rem
+  margin 24px 0 32px
+  color var(--ax-muted)
+  font-size 1.0625rem
+
+.ax-hero .ax-lead:last-child
+  margin-bottom 0
+
+.ax-links
+  display flex
+  flex-wrap wrap
+  align-items center
+  gap 24px
+  font-size .875rem
+
+.ax-link
+  display inline-flex
+  align-items center
+  padding-bottom 2px
+  color var(--ax-ink)
+  text-decoration none
+  border-bottom 1px solid transparent
+  transition color .18s ease, border-color .18s ease
+
+  &:hover
+    color var(--ax-accent)
+    border-bottom-color var(--ax-accent)
+
+.ax-link--accent
+  color var(--ax-accent)
+
+  &:hover
+    color var(--ax-accent-hover)
+    border-bottom-color var(--ax-accent-hover)
+
+// ---------------------------------------------------------------------------
+// 区块
+// ---------------------------------------------------------------------------
+
+.ax-hero
+  position relative
+  overflow hidden
+  padding 88px 0 72px
+  border-bottom 1px solid var(--ax-line)
+  background linear-gradient(180deg, var(--ax-tint-strong) 0%, var(--ax-bg) 64%)
+
+.ax-hero--slim
+  padding 64px 0 48px
+
+.ax-section
+  padding 72px 0
+  border-bottom 1px solid var(--ax-line)
+
+.ax-section:last-of-type
+  border-bottom 0
+
+.ax-section-head
+  display flex
+  justify-content space-between
+  align-items baseline
+  gap 24px
+  margin-bottom 32px
+
+  h2
+    position relative
+    display flex
+    align-items center
+    gap 10px
+    margin 0
+    color var(--ax-ink)
+    font-size 1.5rem
+    font-weight 600
+    line-height 1.25
+
+    &::before
+      content ''
+      position absolute
+      left -14px
+      top .25em
+      width 3px
+      height 18px
+      background var(--ax-accent)
+      border-radius 2px
+
+  p
+    margin 0
+    color var(--ax-muted)
+    font-size .875rem
+
+// ---------------------------------------------------------------------------
+// 精选作品
+// ---------------------------------------------------------------------------
+
+.ax-works
+  list-style none
+  margin 0
+  padding 0
+
+.ax-works__item
+  border-top 1px solid var(--ax-line-soft)
+
+.ax-works__link
+  display grid
+  grid-template-columns 64px minmax(0, 1fr) 160px
+  gap 24px
+  align-items baseline
+  padding 20px 16px
+  margin 0 -16px
+  border-radius var(--ax-radius-card)
+  color inherit
+  text-decoration none
+  transition background-color .18s ease
+
+  &:hover
+    background var(--ax-surface)
+
+  &:hover .ax-works__title
+    color var(--ax-accent)
+
+  &:hover .ax-works__tag
+    border-color var(--chip-color, var(--ax-accent))
+
+.ax-works__index
+  color var(--ax-accent)
+  font-family var(--ax-font-mono)
+  font-size .75rem
+  font-weight 500
+
+.ax-works__title
+  display block
+  color var(--ax-ink)
+  font-size 1.125rem
+  font-weight 500
+  line-height 1.4
+  transition color .18s ease
+
+.ax-works__note
+  display block
+  margin-top 6px
+  color var(--ax-muted)
+  font-size .875rem
+
+.ax-works__tag
+  justify-self end
+  padding 3px 10px
+  border 1px solid var(--chip-color, var(--ax-line))
+  border-radius var(--ax-radius-chip)
+  background var(--chip-bg, var(--ax-tint))
+  color var(--chip-color, var(--ax-accent))
+  font-size .75rem
+  line-height 1.5
+  white-space nowrap
+  transition border-color .18s ease, background-color .18s ease
+
+// ---------------------------------------------------------------------------
+// 按主题读
+// ---------------------------------------------------------------------------
+
+.ax-topics
+  display grid
+  grid-template-columns repeat(2, minmax(0, 1fr))
+  gap 48px
+
+.ax-topic
+  h3
+    margin 0 0 8px
+    color var(--ax-ink)
+    font-size 1.375rem
+    font-weight 600
+    line-height 1.4
+
+.ax-topic__note
+  margin 0 0 16px
+  color var(--ax-muted)
+  font-size .875rem
+
+.ax-topic__list
+  display grid
+  grid-template-columns repeat(2, minmax(0, 1fr))
+  gap 8px 16px
+  list-style none
+  margin 0
+  padding 0
+
+  a
+    display flex
+    align-items center
+    gap 8px
+    color var(--ax-ink)
+    font-size .875rem
+    text-decoration none
+    border-bottom 1px solid transparent
+
+    &::before
+      content ''
+      flex 0 0 auto
+      width 6px
+      height 6px
+      border-radius 50%
+      background var(--chip-color, var(--ax-accent-soft))
+
+    &:hover
+      color var(--ax-accent)
+      border-bottom-color var(--ax-accent)
+
+// 系列固定配色
+.ax-c1
+  --chip-color var(--ax-c1)
+  --chip-bg var(--ax-c1-bg)
+
+.ax-c2
+  --chip-color var(--ax-c2)
+  --chip-bg var(--ax-c2-bg)
+
+.ax-c3
+  --chip-color var(--ax-c3)
+  --chip-bg var(--ax-c3-bg)
+
+.ax-c4
+  --chip-color var(--ax-c4)
+  --chip-bg var(--ax-c4-bg)
+
+.ax-c5
+  --chip-color var(--ax-c5)
+  --chip-bg var(--ax-c5-bg)
+
+.ax-c6
+  --chip-color var(--ax-c6)
+  --chip-bg var(--ax-c6-bg)
+
+// ---------------------------------------------------------------------------
+// 最近更新
+// ---------------------------------------------------------------------------
+
+.ax-updates
+  list-style none
+  margin 0
+  padding 0
+
+  li
+    display flex
+    justify-content space-between
+    align-items baseline
+    gap 24px
+    padding 14px 0
+    border-top 1px solid var(--ax-line-soft)
+
+  a
+    color var(--ax-body)
+    text-decoration none
+    transition color .18s ease
+
+    &:hover
+      color var(--ax-accent)
+
+  time
+    flex 0 0 auto
+    color var(--ax-quiet)
+    font-family var(--ax-font-mono)
+    font-size .75rem
+
+.ax-more
+  margin 24px 0 0
+  font-size .875rem
+
+  a
+    color var(--ax-accent)
+    text-decoration none
+
+    &:hover
+      color var(--ax-accent-hover)
+
+// ---------------------------------------------------------------------------
+// 关于
+// ---------------------------------------------------------------------------
+
+.ax-about__grid
+  display grid
+  gap 8px
+  max-width 40rem
+
+  p
+    margin 0
+    color var(--ax-body)
+
+.ax-about__grid .ax-more
+  margin-top 16px
+
+.ax-about-body
+  max-width 1180px
+  margin 0 auto
+  padding 0 24px
+
+  .markdown-body
+    max-width 720px
+
+// 长文排版：关于页与系列页共用
+.ax-prose
+  .markdown-body
+    color var(--ax-body)
+
+    h2
+      position relative
+      margin-top 40px
+      border-bottom none
+      color var(--ax-ink)
+      font-size 1.25rem
+      font-weight 600
+
+      &::before
+        content ''
+        position absolute
+        left -14px
+        top .3em
+        margin-top 0
+        width 3px
+        height .92em
+        background var(--ax-accent)
+        border-radius 2px
+        visibility visible
+
+    h2:first-child
+      margin-top 0
+
+    strong
+      color var(--ax-ink)
+
+    a
+      color var(--ax-accent)
+
+    blockquote
+      border-left-color var(--ax-line)
+      background var(--ax-surface)
+
+    code
+      background var(--ax-surface)
+
+    table
+      border-color var(--ax-line)
+
+      th
+        background var(--ax-tint)
+        color var(--ax-ink)
+
+      th, td
+        border-color var(--ax-line)
+
+// ---------------------------------------------------------------------------
+// 代码块
+// ---------------------------------------------------------------------------
+
+.ax-page
+  --highlight-bg-color var(--ax-surface)
+
+.ax-page .markdown-body
+  figure.highlight,
+  .code-wrapper
+    margin 1rem 0
+    border 1px solid var(--ax-line)
+    border-radius var(--ax-radius-card)
+    background var(--ax-surface)
+    overflow hidden
+
+  figure.highlight
+    table
+      width 100%
+      margin 0
+      border 0
+      background transparent
+
+    td.gutter
+      background var(--ax-surface)
+
+      pre
+        border-right 1px solid var(--ax-line-soft)
+
+        span.line
+          color var(--ax-muted)
+
+  .hljs
+    background transparent
+    color var(--ax-body)
+
+  .hljs-comment,
+  .hljs-code,
+  .hljs-formula,
+  .hljs-meta
+    color var(--ax-muted)
+
+  .hljs-doctag,
+  .hljs-keyword,
+  .hljs-meta .hljs-keyword,
+  .hljs-template-tag,
+  .hljs-template-variable,
+  .hljs-type,
+  .hljs-variable.language_
+    color var(--ax-accent)
+
+  .hljs-title,
+  .hljs-title.class_,
+  .hljs-title.class_.inherited__,
+  .hljs-title.function_
+    color var(--ax-c5)
+
+  .hljs-attr,
+  .hljs-attribute,
+  .hljs-literal,
+  .hljs-number,
+  .hljs-operator,
+  .hljs-variable,
+  .hljs-selector-attr,
+  .hljs-selector-class,
+  .hljs-selector-id
+    color var(--ax-c4)
+
+  .hljs-regexp,
+  .hljs-string,
+  .hljs-meta .hljs-string
+    color var(--ax-c3)
+
+  .hljs-built_in,
+  .hljs-symbol
+    color var(--ax-c2)
+
+  .hljs-name,
+  .hljs-quote,
+  .hljs-selector-tag,
+  .hljs-selector-pseudo
+    color var(--ax-c6)
+
+  .hljs-subst,
+  .hljs-emphasis,
+  .hljs-strong
+    color var(--ax-ink)
+
+  .hljs-section
+    color var(--ax-accent)
+    font-weight 600
+
+  .hljs-bullet
+    color var(--ax-c4)
+
+  .hljs-addition
+    color var(--ax-c3)
+    background-color var(--ax-c3-bg)
+
+  .hljs-deletion
+    color var(--ax-c6)
+    background-color var(--ax-c6-bg)
+
+  .code-widget
+    top .5rem
+    right .75rem
+    color var(--ax-quiet)
+    font-family var(--ax-font-mono)
+    font-size .6875rem
+    font-weight 400
+    letter-spacing .04em
+
+.ax-sprite
+  position absolute
+  width 0
+  height 0
+  overflow hidden
+
+// ---------------------------------------------------------------------------
+// 列表页：归档、分类、标签、系列
+// ---------------------------------------------------------------------------
+
+.ax-archive
+  max-width 880px
+
+  &__year
+    margin 40px 0 2px
+    color var(--ax-ink)
+    font-size 1.375rem
+    font-weight 600
+    letter-spacing -.01em
+
+  &__year:first-child
+    margin-top 0
+
+  &__item
+    display grid
+    grid-template-columns 64px minmax(0, 1fr)
+    gap 16px
+    align-items baseline
+    padding 12px 0
+    border-bottom 1px solid var(--ax-line-soft)
+    color var(--ax-body)
+    text-decoration none
+    transition color .18s ease
+
+    time
+      color var(--ax-quiet)
+      font-family var(--ax-font-mono)
+      font-size .75rem
+
+    &:hover
+      color var(--ax-accent)
+
+      time
+        color var(--ax-accent)
+
+.ax-cats
+  display grid
+  grid-template-columns repeat(auto-fill, minmax(260px, 1fr))
+  gap 0 48px
+
+  &__item
+    display flex
+    justify-content space-between
+    align-items baseline
+    gap 16px
+    padding 14px 0
+    border-bottom 1px solid var(--ax-line-soft)
+    color var(--ax-ink)
+    text-decoration none
+
+    &:hover .ax-cats__name
+      color var(--ax-accent)
+
+  &__count
+    flex 0 0 auto
+    color var(--ax-quiet)
+    font-family var(--ax-font-mono)
+    font-size .75rem
+
+.ax-tagcloud
+  display flex
+  flex-wrap wrap
+  gap 10px
+  max-width 880px
+
+  &__item
+    display inline-flex
+    align-items baseline
+    gap 6px
+    padding 5px 12px
+    border 1px solid var(--ax-line)
+    border-radius var(--ax-radius-chip)
+    background var(--ax-bg)
+    color var(--ax-ink)
+    line-height 1.5
+    text-decoration none
+    transition border-color .18s ease, color .18s ease
+
+    span
+      color var(--ax-quiet)
+      font-family var(--ax-font-mono)
+      font-size .6875rem
+
+    &:hover
+      border-color var(--ax-accent)
+      color var(--ax-accent)
+
+// 分页
+.ax-page #pagination
+  display flex
+  flex-wrap wrap
+  align-items center
+  gap 6px
+  margin-top 40px
+  font-family var(--ax-font-mono)
+  font-size .8125rem
+
+  .page-number
+    display inline-flex
+    align-items center
+    justify-content center
+    min-width 32px
+    height 32px
+    padding 0 8px
+    border-radius var(--ax-radius-card)
+    color var(--ax-muted)
+    text-decoration none
+    transition background-color .18s ease, color .18s ease
+
+    &:hover
+      background var(--ax-tint)
+      color var(--ax-accent)
+
+    &.current
+      background var(--ax-accent)
+      color #fff
+
+  .space
+    color var(--ax-quiet)
+
+  .extend
+    color var(--ax-muted)
+
+    &:hover
+      color var(--ax-accent)
+
+.ax-doc__content
+  max-width 820px
+
+// ---------------------------------------------------------------------------
+// 搜索弹窗
+// ---------------------------------------------------------------------------
+
+#modalSearch
+  .modal-dialog
+    max-width 640px
+
+    @media (max-width: 575px)
+      margin 1rem
+
+  .modal-content
+    border 1px solid var(--ax-line)
+    border-radius var(--ax-radius-card)
+    background var(--ax-bg)
+    box-shadow none
+
+  .modal-header
+    padding 16px 24px
+    border-bottom 1px solid var(--ax-line-soft)
+
+  .modal-title
+    color var(--ax-ink)
+    font-size 1rem
+    font-weight 600 !important
+    letter-spacing .02em
+
+  .close
+    color var(--ax-quiet)
+    font-size 1.5rem
+    font-weight 300
+    opacity 1
+    text-shadow none
+
+    &:hover
+      color var(--ax-accent)
+
+  .modal-body
+    padding 4px 24px 20px
+
+  .md-form
+    margin 16px 0 4px
+
+    input[type]
+      border-bottom 1px solid var(--ax-line)
+      color var(--ax-ink)
+      font-size .9375rem
+      caret-color var(--ax-accent)
+
+      &:focus:not([readonly]),
+      &.valid,
+      &.invalid,
+      &:focus.valid,
+      &:focus.invalid
+        border-bottom-color var(--ax-accent)
+        box-shadow none
+
+    label
+      top -1.1rem
+      color var(--ax-quiet)
+      font-size .75rem
+
+  #local-search-result
+    .list-group-item
+      border 0
+      background transparent
+
+    .list-group-item-action:hover,
+    .list-group-item-action:focus
+      background var(--ax-tint)
+
+    .search-list-title
+      display block
+      padding 16px 0 6px 14px
+      border-left 3px solid var(--ax-accent)
+      color var(--ax-ink)
+      font-size .9375rem
+      font-weight 600
+
+      &:hover
+        color var(--ax-accent)
+
+    .search-list-content
+      margin 0
+      padding 0 0 16px 17px
+      color var(--ax-muted)
+      font-size .8125rem
+      line-height 1.7
+
+    .search-word
+      padding 0 2px
+      border-radius var(--ax-radius-chip)
+      background var(--ax-tint)
+      color var(--ax-accent)
+
+.modal-backdrop
+  background-color var(--ax-scrim)
+
+  &.show
+    opacity 1
+
+// ---------------------------------------------------------------------------
+// 404
+// ---------------------------------------------------------------------------
+
+// 404 整页一屏，页脚贴底
+body:has(.ax-404)
+  display flex
+  flex-direction column
+  min-height 100vh
+
+  main
+    flex 1 0 auto
+
+  footer
+    flex none
+
+.ax-404
+  padding-top 64px
+
+  .ax-hero
+    padding 120px 0 96px
+    border-bottom none
+
+// ---------------------------------------------------------------------------
+// 文章页
+// ---------------------------------------------------------------------------
+
+.ax-post-row
+  display grid
+  grid-template-columns minmax(0, 1fr) 232px
+  gap 64px
+  width 100%
+  max-width 1180px
+  margin 0 auto !important
+  padding 64px 24px 96px
+
+.ax-post-aside
+  display none !important
+
+.ax-post-row > .side-col
+  width auto
+  max-width none
+  padding 0
+  flex none
+
+.ax-post-main
+  width auto !important
+  max-width none !important
+  padding 0 !important
+  flex none !important
+
+.ax-post #board-ctn
+  width auto
+  max-width none
+  padding 0
+
+.ax-post #board
+  margin 0
+  padding 0
+  background transparent
+  border-radius 0
+  box-shadow none
+
+.ax-post-head
+  padding-bottom 32px
+  margin-bottom 40px
+  border-bottom 1px solid var(--ax-line)
+
+.ax-post-head__title
+  margin 0
+  color var(--ax-ink)
+  font-size clamp(1.75rem, 3.2vw, 2.5rem)
+  font-weight 600
+  line-height 1.28
+  letter-spacing -.02em
+
+.ax-post-head__meta
+  margin-top 20px
+  color var(--ax-quiet)
+  font-family var(--ax-font-mono)
+  font-size .75rem
+
+  > div
+    display inline
+    vertical-align middle
+
+    & + div
+      margin-left 20px
+
+  .post-meta
+    display inline-flex
+    align-items center
+    gap 6px
+
+    .ax-inline-ico
+      color var(--ax-quiet)
+
+    a
+      color var(--ax-accent)
+      text-decoration none
+
+.ax-post-series
+  margin 16px 0 0
+  color var(--ax-muted)
+  font-size .8125rem
+
+  a
+    color var(--ax-accent)
+    text-decoration none
+
+    &:hover
+      text-decoration underline
+
+.ax-post .post-content
+  max-width 720px
+  margin 0
+  padding 0
+
+.ax-post .markdown-body
+  max-width none
+
+.ax-post .sidebar
+  position sticky
+  top 92px
+  margin 0 !important
+  padding 0 !important
+
+.ax-post #toc
+  margin-top 8px
+  max-height calc(100vh - 120px)
+  padding-left 16px
+  border-left 1px solid var(--ax-line)
+  overflow-y auto
+
+  .toc-header
+    margin-bottom 12px
+    color var(--ax-ink)
+    font-size .8125rem
+    font-weight 600
+
+  .toc-body
+    max-height none
+
+  .tocbot-list
+    line-height 1.4
+
+    ol
+      padding-left 12px
+
+  .toc-list-item
+    line-height 1.4
+    padding 2px 0
+
+  .tocbot-link
+    color var(--ax-muted) !important
+    font-size .8125rem !important
+    line-height 1.4
+    text-decoration none
+
+    &:hover
+      color var(--ax-accent) !important
+
+  .tocbot-active-link
+    color var(--ax-accent) !important
+    font-weight 500
+
+  .toc-toggle
+    color var(--ax-quiet) !important
+
+  &::-webkit-scrollbar
+    width 4px
+
+.ax-post .ax-mobile-toc
+  margin 16px 0 24px
+  color var(--ax-ink)
+
+  > summary
+    cursor pointer
+
+  #toc .toc-header
+    display none
+
+// 文章尾部：分类与标签
+.ax-post .post-metas
+  display flex
+  flex-wrap wrap
+  align-items center
+  gap 10px 24px
+  margin 24px 0
+  padding-top 20px
+  border-top 1px solid var(--ax-line)
+  font-size .8125rem
+
+  .post-meta
+    display inline-flex
+    align-items center
+    gap 6px
+    margin 0
+
+  .ax-ico
+    width 14px
+    height 14px
+    flex none
+
+  .post-meta--cat
+    .ax-ico
+      color var(--ax-accent)
+
+    .category-chains
+      display inline-flex
+      align-items center
+      gap 6px
+
+    .category-chain
+      display inline-flex
+      align-items center
+      gap 6px
+
+    .category-chain-item
+      padding 3px 10px
+      border 1px solid var(--ax-line)
+      border-radius var(--ax-radius-chip)
+      color var(--ax-ink)
+      text-decoration none
+
+      &:hover
+        border-color var(--ax-accent)
+        color var(--ax-accent)
+
+    .category-chain > span
+      color var(--ax-quiet)
+
+  .post-meta--tags
+    flex-wrap wrap
+    gap 6px 12px
+    color var(--ax-muted)
+
+    .ax-ico
+      color var(--ax-quiet)
+
+    a
+      color var(--ax-muted)
+      text-decoration none
+      white-space nowrap
+
+      &:hover
+        color var(--ax-accent)
+
+// 许可协议
+.ax-post .license-box
+  padding 20px 24px
+  border 1px solid var(--ax-line)
+  border-radius var(--ax-radius-card)
+  background var(--ax-surface)
+  font-size .8125rem
+
+  .license-icon
+    display none
+
+  .license-title
+    margin-bottom 16px
+
+    div:nth-child(1)
+      margin-bottom 6px
+      color var(--ax-ink)
+      font-size .875rem
+      font-weight 500
+      line-height 1.5
+
+    div:nth-child(2)
+      color var(--ax-muted)
+      font-family var(--ax-font-mono)
+      font-size .6875rem
+      line-height 1.6
+      word-break break-all
+
+  .license-meta
+    gap 8px 28px
+
+    .license-meta-item
+      margin-right 0
+
+      div:nth-child(1)
+        color var(--ax-muted)
+        font-size .6875rem
+
+      div:nth-child(2)
+        color var(--ax-body)
+
+      .ax-cc-ico
+        color var(--ax-accent)
+
+.ax-post .post-prevnext
+  display grid
+  grid-template-columns 1fr 1fr
+  gap 16px
+  margin 48px 0 0
+
+  article
+    display block
+    width auto
+    max-width none
+    padding 0
+    flex none
+
+  a
+    display flex
+    align-items center
+    gap 10px
+    padding 16px
+    border 1px solid var(--ax-line)
+    border-radius var(--ax-radius-card)
+    color var(--ax-body)
+    font-size .875rem
+    text-decoration none
+    transition border-color .18s ease, color .18s ease
+
+    &:hover
+      border-color var(--ax-accent)
+      color var(--ax-accent)
+
+.ax-post hr
+  border-color var(--ax-line)
+
+@media (max-width: 991px)
+  body:has(.ax-page) #navbar .ax-actions
+    display none
+
+  .ax-post-row
+    grid-template-columns minmax(0, 1fr)
+    gap 0
+    padding 80px 24px 64px
+
+  .ax-post-main
+    min-width 0
+
+@media (max-width: 767px)
+  #board:has(.ax-page)
+    margin-top 68px !important
+
+  .ax-container
+    padding 0 20px
+
+  body:has(.ax-page) #navbar .container
+    padding-left 20px
+    padding-right 20px
+
+  .ax-post-row
+    padding 80px 20px 64px
+
+  // 允许标题前的竖条悬挂在正文左边缘外
+  .ax-post .post-content
+    overflow visible
+
+  .ax-hero
+    padding 56px 0 48px
+
+  .ax-404 .ax-hero
+    padding 72px 0 56px
+
+  .ax-section
+    padding 48px 0
+
+  .ax-section-head
+    flex-direction column
+    gap 8px
+    margin-bottom 24px
+
+  .ax-works__link
+    grid-template-columns 40px minmax(0, 1fr)
+    gap 16px
+    padding 16px 12px
+    margin 0 -12px
+
+  .ax-works__tag
+    grid-column 2
+    justify-self start
+    margin-top 6px
+
+  .ax-topics
+    grid-template-columns 1fr
+    gap 32px
+
+  .ax-topic__list
+    grid-template-columns 1fr
+
+  .ax-updates li
+    flex-direction column
+    gap 4px
+
+  .ax-title
+    gap 12px

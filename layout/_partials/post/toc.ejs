@@ -1,0 +1,124 @@
+<div id="toc">
+  <p class="toc-header">
+    <span><%- __('post.toc') %></span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+<%
+import_script(`
+<script>
+  AsterXuTheme.utils.createScript('${url_join(theme.static_prefix.tocbot, 'tocbot.min.js')}', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+    var mobileToc = document.getElementById('mobile-toc');
+    if (mobileToc) {
+      var desktopSlot = toc[0].parentElement;
+      var mobile = window.matchMedia('(max-width: 991.98px)');
+      function placeToc(event) {
+        (event.matches ? mobileToc : desktopSlot).appendChild(toc[0]);
+      }
+      mobile.addEventListener('change', placeToc);
+      placeToc(mobile);
+    }
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed)
+        .attr('aria-expanded', collapsed ? 'false' : 'true');
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<button type="button" class="toc-toggle toc-toggle-expanded" aria-label="Toggle table of contents" aria-expanded="true">›</button>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    function updateTocVisibility() {
+      var hasLinks = toc.find('.toc-list-item').length > 0;
+      toc.css('visibility', hasLinks ? 'visible' : 'hidden');
+      if (mobileToc) mobileToc.hidden = !hasLinks;
+    }
+    updateTocVisibility();
+    expandAllToc();
+    bindTocToggle();
+
+    AsterXuTheme.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        updateTocVisibility();
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+`)
+%>

@@ -1,0 +1,16 @@
+<div class="post-metas">
+  <% if (page.categories && page.categories.length > 0) { %>
+    <div class="post-meta post-meta--cat mr-3 d-flex align-items-center">
+      <svg class="ax-ico" aria-hidden="true" focusable="false"><use href="#ax-ico-category"></use></svg>
+      <%- partial('_partials/category-chains', { categories: page.categories }) %>
+    </div>
+  <% } %>
+  <% if (page.tags && page.tags.length > 0 ) { %>
+    <div class="post-meta post-meta--tags">
+      <svg class="ax-ico" aria-hidden="true" focusable="false"><use href="#ax-ico-tag"></use></svg>
+      <% page.tags.each(function(tag) { %>
+        <a href="<%= url_for(tag.path) %>" class="print-no-link">#<%- tag.name %></a>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

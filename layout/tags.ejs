@@ -1,0 +1,30 @@
+<%
+page.layout = "tags"
+page.hide_banner = true
+page.title = theme.tag.title || __('tag.title')
+page.subtitle = theme.tag.subtitle || __('tag.subtitle')
+page.banner_img = theme.tag.banner_img
+page.banner_img_height = theme.tag.banner_img_height
+page.banner_mask_alpha = theme.tag.banner_mask_alpha
+var curTags = site.tags.filter(tag => tag.length).data.sort(function (a, b) { return b.length - a.length })
+%>
+
+<div class="ax-page ax-list">
+  <section class="ax-hero ax-hero--slim" aria-labelledby="ax-tags-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow">标签</p>
+      <h1 class="ax-title ax-title--small" id="ax-tags-title">标签</h1>
+      <p class="ax-lead">共 <%= curTags.length %> 个标签，按使用次数排序。</p>
+    </div>
+  </section>
+
+  <section class="ax-section">
+    <div class="ax-container">
+      <div class="ax-tagcloud">
+        <% curTags.forEach(function (tag) { %>
+          <a class="ax-tagcloud__item" href="<%= url_for(tag.path) %>"><%= tag.name.trim() %><span><%= tag.length %></span></a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</div>

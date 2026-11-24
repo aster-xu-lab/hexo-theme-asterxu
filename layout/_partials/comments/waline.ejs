@@ -1,0 +1,24 @@
+<% if (theme.waline.serverURL) { %>
+  <div id="waline"></div>
+  <script type="module">
+    AsterXuTheme.utils.loadComments('#waline', function() {
+      AsterXuTheme.utils.createCssLink('<%= url_join(theme.static_prefix.waline, 'waline.css') %>')
+      import('<%= url_join(theme.static_prefix.waline, 'waline.js') %>').then(({ init }) => {
+        var options = Object.assign(
+          <%- JSON.stringify(theme.waline || {}) %>,
+          {
+            el: '#waline',
+            path: <%= theme.waline.path %>
+          }
+        )
+        init(options);
+        AsterXuTheme.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          AsterXuTheme.plugins.imageCaption(imgSelector);
+          AsterXuTheme.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+<% } %>

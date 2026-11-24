@@ -1,0 +1,143 @@
+<%
+page.hide_banner = true
+var homeData = site.data.home || {}
+var hero = homeData.hero || {}
+var about = homeData.about
+var seriesPath = homeData.series_path && homeData.series_path.replace(/\/?$/, '/')
+page.title = hero.title || ''
+page.subtitle = ''
+var featured = homeData.featured || []
+var seriesData = site.data.series || {}
+var seriesList = seriesData.series || []
+var homeGroups = (seriesData.groups || []).filter(function (group) { return group.home !== false })
+
+var axPalette = ['ax-c1', 'ax-c2', 'ax-c3', 'ax-c4', 'ax-c5', 'ax-c6']
+var seriesColor = {}
+var colorByTitle = {}
+seriesList.forEach(function (s, i) {
+  var cls = axPalette[i % axPalette.length]
+  seriesColor[s.id] = cls
+  colorByTitle[s.title] = cls
+})
+
+var normPath = function (p) { return decodeURI(p).replace(/index\.html$/, '') }
+var postPath = function (post) { return normPath(url_for(post.path)) }
+var recent = site.posts.sort('-date').limit(5)
+%>
+
+<svg class="ax-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="ax-star" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M12 2.8v18.4"></path>
+      <path d="M4.03 7.4l15.94 9.2"></path>
+      <path d="M19.97 7.4L4.03 16.6"></path>
+    </g>
+  </symbol>
+</svg>
+
+<div class="ax-page ax-home">
+  <section class="ax-hero" aria-labelledby="ax-hero-title">
+    <div class="ax-container">
+      <% if (hero.eyebrow) { %>
+        <p class="ax-eyebrow"><%= hero.eyebrow %></p>
+      <% } %>
+      <h1 class="ax-title" id="ax-hero-title">
+        <svg class="ax-mark" width="40" height="40" aria-hidden="true" focusable="false"><use href="#ax-star"></use></svg>
+        <span><%= hero.title || config.title %></span>
+      </h1>
+      <% var lead = hero.lead || config.description || config.subtitle %>
+      <% if (lead) { %>
+        <p class="ax-lead"><%= lead %></p>
+      <% } %>
+    </div>
+  </section>
+
+  <% if (featured.length) { %>
+  <section class="ax-section" id="works" aria-labelledby="ax-works-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-works-title">精选作品</h2>
+      </div>
+      <ol class="ax-works">
+        <% featured.forEach(function (item, index) { %>
+          <% var match = site.posts.filter(function (post) { return postPath(post) === normPath(item.path) }).first() %>
+          <li class="ax-works__item">
+            <a class="ax-works__link" href="<%= url_for(item.path) %>">
+              <span class="ax-works__index"><%= String(index + 1).padStart(2, '0') %></span>
+              <span class="ax-works__body">
+                <span class="ax-works__title"><%= match ? match.title : item.pitch %></span>
+                <span class="ax-works__note"><%= item.pitch %></span>
+              </span>
+              <span class="ax-works__tag <%= colorByTitle[item.series] || '' %>"><%= item.series %></span>
+            </a>
+          </li>
+        <% }) %>
+      </ol>
+    </div>
+  </section>
+  <% } %>
+
+  <% if (seriesPath && homeGroups.length && seriesList.length) { %>
+  <section class="ax-section" id="topics" aria-labelledby="ax-topics-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-topics-title">按主题读</h2>
+      </div>
+      <div class="ax-topics">
+        <% homeGroups.forEach(function (group) { %>
+          <% var groupSeries = seriesList.filter(function (s) { return s.group === group.id }) %>
+          <div class="ax-topic ax-topic--<%= group.id %>">
+            <h3><%= group.name %></h3>
+            <% if (group.home_note) { %>
+              <p class="ax-topic__note"><%= group.home_note %></p>
+            <% } %>
+            <ul class="ax-topic__list">
+              <% groupSeries.forEach(function (s) { %>
+                <li><a class="<%= seriesColor[s.id] %>" href="<%= url_for(seriesPath + s.id + '/') %>"><%= s.title %></a></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% }) %>
+      </div>
+      <p class="ax-more"><a href="<%= url_for(seriesPath) %>">查看全部 <%= seriesList.length %> 个系列 →</a></p>
+    </div>
+  </section>
+  <% } %>
+
+  <% if (recent.length) { %>
+  <section class="ax-section" id="updates" aria-labelledby="ax-updates-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-updates-title">最近更新</h2>
+      </div>
+      <ul class="ax-updates">
+        <% recent.forEach(function (post) { %>
+          <li>
+            <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+            <time datetime="<%= full_date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+          </li>
+        <% }) %>
+      </ul>
+      <p class="ax-more"><a href="<%= url_for('/archives/') %>">全部文章 →</a></p>
+    </div>
+  </section>
+  <% } %>
+
+  <% if (about && about.paragraphs && about.paragraphs.length) { %>
+  <section class="ax-section ax-about" id="about" aria-labelledby="ax-about-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-about-title">关于</h2>
+      </div>
+      <div class="ax-about__grid">
+        <% for (const paragraph of about.paragraphs) { %>
+          <p><%= paragraph %></p>
+        <% } %>
+        <% if (about.link && about.link.path && about.link.label) { %>
+          <p class="ax-more"><a href="<%= url_for(about.link.path) %>"><%= about.link.label %></a></p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+</div>

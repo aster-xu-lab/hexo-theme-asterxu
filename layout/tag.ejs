@@ -1,0 +1,19 @@
+<%
+page.layout = "tag"
+page.hide_banner = true
+page.title = [__('tag.title'), page.tag].join(" - ")
+page.subtitle = [__('tag.subtitle'), page.tag].join(" - ")
+page.banner_img = theme.tag.banner_img
+page.banner_img_height = theme.tag.banner_img_height
+page.banner_mask_alpha = theme.tag.banner_mask_alpha
+
+var tag = site.tags.find({name: page.tag}).filter(tag => tag.length).data[0]
+var tagTotal = tag ? tag.posts.length : 0
+%>
+
+<%- partial('_partials/archive-list.ejs', { params: {
+  key: page.layout,
+  eyebrow: '标签',
+  heading: page.tag,
+  lead: '共 ' + tagTotal + ' 篇文章，按年份倒序。'
+} }) %>

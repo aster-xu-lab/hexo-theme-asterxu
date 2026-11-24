@@ -1,0 +1,29 @@
+<div class="ax-page ax-list">
+  <section class="ax-hero ax-hero--slim" aria-labelledby="ax-list-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow"><%= params.eyebrow %></p>
+      <h1 class="ax-title ax-title--small" id="ax-list-title"><%= params.heading %></h1>
+      <p class="ax-lead"><%= params.lead %></p>
+    </div>
+  </section>
+
+  <section class="ax-section">
+    <div class="ax-container">
+      <div class="ax-archive">
+        <% var dateCursor %>
+        <% page.posts.each(function (post) { %>
+          <% if (params.showYear !== false && date(post.date, "YYYY") !== dateCursor) { %>
+            <% dateCursor = date(post.date, "YYYY") %>
+            <h2 class="ax-archive__year"><%= dateCursor %></h2>
+          <% } %>
+          <a class="ax-archive__item" href="<%= url_for(post.path) %>">
+            <time datetime="<%= full_date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, "MM-DD") %></time>
+            <span class="ax-archive__title"><%= post.title %></span>
+          </a>
+        <% }) %>
+      </div>
+
+      <%- partial('_partials/paginator') %>
+    </div>
+  </section>
+</div>

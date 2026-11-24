@@ -1,0 +1,200 @@
+<%- partial('_partials/ax-icons') %>
+<%
+var axNavIconMap = {
+  home: 'ax-nav-home',
+  archive: 'ax-nav-archive',
+  category: 'ax-nav-category',
+  tag: 'ax-nav-tag',
+  series: 'ax-nav-series',
+  user: 'ax-nav-user'
+};
+%>
+<nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="<%= url_for() %>">
+      <strong><%= theme.navbar.blog_title || config.title %></strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        <% for(const each of theme.navbar.menu || []) { %>
+          <% if (!each.submenu && !each.link) continue %>
+          <% var text = each.name || __(each.key + '.menu') || __(each.key + '.title') %>
+          <% if (text.indexOf('.menu') !== -1 || text.indexOf('.title') !== -1) {
+            text = each.key
+          } %>
+          <% if (each.submenu) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <% var navIcon = axNavIconMap[each.icon] %>
+                <% if (navIcon) { %>
+                  <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= navIcon %>"></use></svg>
+                <% } else if (each.icon) { %>
+                  <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+                <% } %>
+                <span><%- text %></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% for(const subEach of each.submenu || []) { %>
+                  <% if (!subEach.link) continue %>
+                  <% var subText = subEach.name || __(subEach.key + '.title') %>
+                  <% if (subText.indexOf('.title') !== -1) {
+                    subText = subEach.key
+                  } %>
+                  <a class="dropdown-item" href="<%= url_for(subEach.link) %>" target="<%= subEach.target || '_self' %>">
+                    <% var dropIcon = axNavIconMap[subEach.icon] %>
+                    <% if (dropIcon) { %>
+                      <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= dropIcon %>"></use></svg>
+                    <% } else if (subEach.icon) { %>
+                      <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+                    <% } %>
+                    <span><%- subText %></span>
+                  </a>
+                <% } %>
+              </div>
+            </li>
+          <% } else { %>
+            <% var current = is_current(each.link) %>
+            <li class="nav-item<%= current ? ' active' : '' %>">
+              <a class="nav-link<%= current ? ' active' : '' %>" href="<%= url_for(each.link) %>" target="<%= each.target || '_self' %>" aria-current="<%= current ? 'page' : 'false' %>">
+                <% var navIcon = axNavIconMap[each.icon] %>
+                <% if (navIcon) { %>
+                  <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= navIcon %>"></use></svg>
+                <% } else if (each.icon) { %>
+                  <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+                <% } %>
+                <span><%- text %></span>
+              </a>
+            </li>
+          <% } %>
+        <% } %>
+      </ul>
+      <div class="ax-actions">
+        <% if (theme.navbar.github) { %>
+          <a class="ax-iconbtn" href="<%= url_for(theme.navbar.github) %>" target="_blank" rel="noopener" aria-label="GitHub（在新窗口打开）">
+            <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-nav-github"></use></svg>
+          </a>
+        <% } %>
+        <% if(theme.search.enable) { %>
+          <button class="ax-iconbtn" type="button" id="search-btn" data-toggle="modal" data-target="#modalSearch" aria-label="搜索" aria-keyshortcuts="Control+K Meta+K" title="搜索（Ctrl/⌘ K）">
+            <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-nav-search"></use></svg>
+          </button>
+          <% import_js(theme.static_prefix.internal_js, 'local-search.js') %>
+        <% } %>
+        <% if(theme.dark_mode && theme.dark_mode.enable) { %>
+          <button class="ax-iconbtn" type="button" id="color-toggle-btn" aria-label="切换深色模式" aria-pressed="false">
+            <svg class="ax-nav-ico ax-theme__sun" aria-hidden="true" focusable="false"><use href="#ax-nav-sun"></use></svg>
+            <svg class="ax-nav-ico ax-theme__moon" aria-hidden="true" focusable="false"><use href="#ax-nav-moon"></use></svg>
+          </button>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none" aria-hidden="true" inert>
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        <% for(const each of theme.navbar.menu || []) { %>
+          <% if (!each.submenu && !each.link) continue %>
+          <% var gridText = each.name || __(each.key + '.menu') || __(each.key + '.title') %>
+          <% if (gridText.indexOf('.menu') !== -1 || gridText.indexOf('.title') !== -1) {
+            gridText = each.key
+          } %>
+          <% if (each.submenu) { %>
+            <%
+              // Flatten submenu items as grid cells grouped under a header
+              // First render the parent as a header row, then sub items
+            %>
+            <div class="col-12 mobile-grid-group-header">
+              <% var groupIcon = axNavIconMap[each.icon] %>
+              <% if (groupIcon) { %>
+                <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= groupIcon %>"></use></svg>
+              <% } else if (each.icon) { %>
+                <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+              <% } %>
+              <span><%- gridText %></span>
+            </div>
+            <% for(const subEach of each.submenu || []) { %>
+              <% if (!subEach.link) continue %>
+              <% var subGridText = subEach.name || __(subEach.key + '.title') %>
+              <% if (subGridText.indexOf('.title') !== -1) {
+                subGridText = subEach.key
+              } %>
+              <div class="col-4 mobile-grid-cell">
+                <a href="<%= url_for(subEach.link) %>" target="<%= subEach.target || '_self' %>">
+                  <div class="mobile-grid-item">
+                    <% var mobileIcon = axNavIconMap[subEach.icon] %>
+                    <% if (mobileIcon) { %>
+                      <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= mobileIcon %>"></use></svg>
+                    <% } else { %>
+                      <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+                    <% } %>
+                    <span><%- subGridText %></span>
+                  </div>
+                </a>
+              </div>
+            <% } %>
+          <% } else { %>
+            <div class="col-4 mobile-grid-cell">
+              <a href="<%= url_for(each.link) %>" target="<%= each.target || '_self' %>">
+                <div class="mobile-grid-item">
+                  <% var mobileIcon = axNavIconMap[each.icon] %>
+                  <% if (mobileIcon) { %>
+                    <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#<%= mobileIcon %>"></use></svg>
+                  <% } else { %>
+                    <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-link"></use></svg>
+                  <% } %>
+                  <span><%- gridText %></span>
+                </div>
+              </a>
+            </div>
+          <% } %>
+        <% } %>
+        <% if (theme.navbar.github) { %>
+          <div class="col-4 mobile-grid-cell mobile-grid-cell--tool">
+            <a href="<%= url_for(theme.navbar.github) %>" target="_blank" rel="noopener" aria-label="GitHub（在新窗口打开）">
+              <div class="mobile-grid-item">
+                <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-nav-github"></use></svg>
+                <span>GitHub</span>
+              </div>
+            </a>
+          </div>
+        <% } %>
+        <% if(theme.search.enable) { %>
+          <div class="col-4 mobile-grid-cell mobile-grid-cell--tool" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="搜索">
+              <div class="mobile-grid-item">
+                <svg class="ax-nav-ico" aria-hidden="true" focusable="false"><use href="#ax-nav-search"></use></svg>
+                <span><%= __('search.title') !== 'search.title' ? __('search.title') : '搜索' %></span>
+              </div>
+            </a>
+          </div>
+        <% } %>
+        <% if(theme.dark_mode && theme.dark_mode.enable) { %>
+          <div class="col-4 mobile-grid-cell mobile-grid-cell--tool" id="mobile-color-toggle-btn"
+               data-label-light="<%= __('darkmode.light') %>"
+               data-label-dark="<%= __('darkmode.dark') %>">
+            <a href="javascript:;" aria-label="切换深色模式">
+              <div class="mobile-grid-item">
+                <svg class="ax-nav-ico ax-theme__sun" aria-hidden="true" focusable="false"><use href="#ax-nav-sun"></use></svg>
+                <svg class="ax-nav-ico ax-theme__moon" aria-hidden="true" focusable="false"><use href="#ax-nav-moon"></use></svg>
+                <span id="mobile-color-toggle-label"><%= __('darkmode.dark') %></span>
+              </div>
+            </a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

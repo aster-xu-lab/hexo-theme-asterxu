@@ -1,0 +1,9 @@
+title: Example Notebook
+author: Example Author
+description: A standalone Hexo installation.
+url: https://example.test
+root: /
+language: zh-CN
+timezone: UTC
+permalink: :title/
+theme: asterxu

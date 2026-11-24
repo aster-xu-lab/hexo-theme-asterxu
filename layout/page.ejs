@@ -1,0 +1,32 @@
+<%
+page.hide_banner = true
+var layout = page.layout
+page.title = page.title || __(`${ layout }.title`)
+page.subtitle = page.subtitle || page.title || __(`${ layout }.subtitle`)
+page.banner_img = page.banner_img || theme.page.banner_img
+page.banner_img_height = page.banner_img_height || theme.page.banner_img_height
+page.banner_mask_alpha = page.banner_mask_alpha || theme.page.banner_mask_alpha
+%>
+
+<div class="ax-page ax-doc">
+  <section class="ax-hero ax-hero--slim" aria-labelledby="ax-doc-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow"><%= page.ax_eyebrow || '系列' %></p>
+      <h1 class="ax-title ax-title--small" id="ax-doc-title"><%= page.title %></h1>
+      <% if (page.lead) { %>
+        <p class="ax-lead"><%= page.lead %></p>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="ax-section">
+    <div class="ax-container">
+      <article class="ax-doc__content ax-prose">
+        <%- page.content %>
+        <%- inject_point('pageComments') %>
+      </article>
+    </div>
+  </section>
+</div>
+
+<%- partial('_partials/markdown-plugins') %>

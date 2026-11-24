@@ -1,0 +1,19 @@
+<%
+page.layout = "archive"
+page.hide_banner = true
+page.subtitle = theme.archive.subtitle || __('archive.subtitle')
+page.banner_img = theme.archive.banner_img
+page.banner_img_height = theme.archive.banner_img_height
+page.banner_mask_alpha = theme.archive.banner_mask_alpha
+var archiveHeading = page.year ? page.year + ' 年' + (page.month ? ' ' + page.month + ' 月' : '') + '文章' : '全部文章'
+var archiveTotal = page.posts.length
+page.title = archiveHeading
+%>
+
+<%- partial('_partials/archive-list.ejs', { params: {
+  key: page.layout,
+  eyebrow: '时间线',
+  showYear: !page.year,
+  heading: archiveHeading,
+  lead: '共 ' + archiveTotal + ' 篇文章，按时间倒序。'
+} }) %>

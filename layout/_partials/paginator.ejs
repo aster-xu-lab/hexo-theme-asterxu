@@ -1,0 +1,14 @@
+<% if (page.total > 1){ %>
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <%- paginator({
+        prev_text: '<svg class="ax-inline-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-arrow-left"></use></svg><span class="sr-only">上一页</span>',
+        next_text: '<svg class="ax-inline-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-arrow-right"></use></svg><span class="sr-only">下一页</span>',
+        mid_size: 2,
+        end_size: 1,
+        format: `${config.pagination_dir}/%d/${theme.scroll_down_arrow.scroll_after_turning_page ? '#board' : ''}`,
+        escape: false
+      }) %>
+    </span>
+  </nav>
+<% } %>
