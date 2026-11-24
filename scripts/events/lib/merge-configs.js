@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
 const objUtil = require('../../utils/object');
 const { isNotEmptyObject } = require('../../utils/object');
 
@@ -17,12 +15,6 @@ module.exports = (hexo) => {
     const staticOverrides = data && data.asterxu_static_prefix;
     if (isNotEmptyObject(themeOverrides)) {
       dataConfig = themeOverrides;
-    } else if (!configFromRoot(hexo)) {
-      if (isZh) {
-        hexo.log.warn('[AsterXu] 建议在 _config.asterxu.yml 中覆盖主题配置。');
-      } else {
-        hexo.log.warn('[AsterXu] Use _config.asterxu.yml to override theme settings.');
-      }
     }
     if (isNotEmptyObject(staticOverrides)) {
       dataStaticConfig = staticOverrides;
@@ -87,9 +79,4 @@ module.exports = (hexo) => {
   }
 
   hexo.log.debug('[AsterXu] Output theme config:\n', JSON.stringify(hexo.theme.config, undefined, 2));
-};
-
-const configFromRoot = (hexo) => {
-  const configPath = path.join(hexo.base_dir, `_config.${hexo.config.theme}.yml`);
-  return fs.existsSync(configPath);
 };

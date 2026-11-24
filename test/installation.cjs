@@ -31,6 +31,7 @@ for (const root of ['/', '/notes/']) {
       env: { ...process.env, TZ: 'UTC' }
     })
     assert.doesNotMatch(log, /\b(?:ERROR|FATAL)\b/)
+    assert.doesNotMatch(log, /Use _config\.asterxu|建议在 _config\.asterxu/)
 
     const out = path.join(site, 'public')
     const read = file => fs.readFileSync(path.join(out, file), 'utf8')
@@ -42,6 +43,7 @@ for (const root of ['/', '/notes/']) {
     assert.match(read('categories/index.html'), /Notes/)
     assert.match(read('tags/index.html'), /Example/)
     assert.match(read('local-search.xml'), /A searchable sample sentence\./)
+    assert.equal(fs.existsSync(path.join(out, 'xml/local-search.xml')), false)
     assert.ok(read('local-search.xml').includes(root + 'welcome/'))
     assert.ok(home.includes(root + 'lib/bootstrap/4.6.1/css/bootstrap.min.css'))
     assert.ok(home.includes(root + 'img/asterxu/favicon.svg'))
