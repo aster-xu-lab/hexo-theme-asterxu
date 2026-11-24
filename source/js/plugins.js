@@ -136,7 +136,10 @@ AsterXuTheme.plugins = {
 
       var bgClass = getBgClass($pre[0]);
       if (enableCopy) {
-        $pre.append('<button type="button" class="code-widget ' + bgClass + ' copy-btn" data-clipboard-snippet aria-label="复制代码"><svg class="ax-inline-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-copy"></use></svg>' + lang + '</button>');
+        var $button = jQuery('<button type="button" class="code-widget ' + bgClass + ' copy-btn" data-clipboard-snippet><svg class="ax-inline-ico" aria-hidden="true" focusable="false"><use href="#ax-icon-copy"></use></svg></button>');
+        $button.attr('aria-label', lang ? '复制代码 ' + lang : '复制代码');
+        $button.append(document.createTextNode(lang));
+        $pre.append($button);
       } else {
         $pre.append('<div class="code-widget ' + bgClass + '">' + lang + '</div>');
       }
