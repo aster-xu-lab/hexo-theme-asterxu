@@ -1,0 +1,152 @@
+<%
+page.hide_banner = true
+page.hide_avatar = true
+page.layout = "skills"
+page.title = page.title || 'Skills · 开源能力资产'
+%>
+
+<div class="ax-page ax-skills">
+  <section class="ax-hero ax-hero--slim ax-skills-hero" aria-labelledby="ax-skills-title">
+    <div class="ax-container">
+      <p class="ax-eyebrow">开源</p>
+      <h1 class="ax-title ax-title--small" id="ax-skills-title"><%= page.title %></h1>
+      <p class="ax-lead">把 AI 辅助工程里反复验证的判断方法，做成可安装、有边界的 Skill</p>
+      <% var skills = site.data.skills || [] %>
+      <p class="ax-skills-meta"><span class="ax-mono"><%= skills.length %></span> 个 Skill · 托管于 <a class="ax-mono" href="https://github.com/aster-xu-lab/skills" target="_blank" rel="noopener">aster-xu-lab/skills</a></p>
+    </div>
+  </section>
+
+  <section class="ax-section" aria-labelledby="ax-skills-about-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-skills-about-title">这是什么</h2>
+      </div>
+      <div class="ax-skills-intro">
+        <div class="ax-skills-intro__item">
+          <h3>可安装</h3>
+          <p>在支持 Skill 的 AI 编码宿主中安装使用，按宿主约定放入 skills 目录。</p>
+        </div>
+        <div class="ax-skills-intro__item">
+          <h3>有边界</h3>
+          <p>每个 Skill 是判断方法 + 流程；默认只读，或只在显式授权后执行。</p>
+        </div>
+        <div class="ax-skills-intro__item">
+          <h3>非黑盒</h3>
+          <p>不是自动执行的黑盒：先说明判断与流程，再决定是否执行。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ax-section" aria-labelledby="ax-skills-list-title">
+    <div class="ax-container">
+      <%
+      var mitCount = 0
+      skills.forEach(function (s) { if (s.license === 'mit') mitCount++ })
+      %>
+      <div class="ax-section-head">
+        <h2 id="ax-skills-list-title">Skill 资产</h2>
+        <p><span class="ax-mono"><%= mitCount %></span> 个 MIT · <span class="ax-mono"><%= skills.length - mitCount %></span> 个未指定许可</p>
+      </div>
+
+      <div class="ax-skills-grid">
+        <% skills.forEach(function (s, i) { %>
+        <article class="ax-skill-card">
+          <div class="ax-skill-card__top">
+            <span class="ax-skill-card__index" aria-hidden="true"><%= ('0' + (i + 1)).slice(-2) %></span>
+            <% if (s.license === 'mit') { %>
+              <span class="ax-license-chip ax-license-chip--mit">MIT</span>
+            <% } else { %>
+              <span class="ax-license-chip ax-license-chip--none">许可未指定</span>
+            <% } %>
+          </div>
+          <h3 class="ax-skill-card__name"><%= s.name %></h3>
+          <p class="ax-skill-card__summary"><%= s.summary %></p>
+          <dl class="ax-skill-card__facts">
+            <div class="ax-skill-card__fact">
+              <dt>适用场景</dt>
+              <dd><%= s.scene %></dd>
+            </div>
+            <div class="ax-skill-card__fact">
+              <dt>必要环境</dt>
+              <dd><%= s.env %></dd>
+            </div>
+          </dl>
+          <a class="ax-skill-card__repo" href="https://github.com/aster-xu-lab/skills" target="_blank" rel="noopener" aria-label="在 GitHub 查看 <%= s.name %> 所属仓库">
+            <span class="ax-skill-card__repo-label">仓库</span>
+            <span class="ax-skill-card__repo-url">aster-xu-lab/skills</span>
+            <svg class="ax-ico" width="14" height="14" aria-hidden="true"><use href="#ax-icon-arrow-right"></use></svg>
+          </a>
+        </article>
+        <% }) %>
+      </div>
+
+      <p class="ax-skills-note"><span class="ax-mono"><%= skills.length %></span> 个 Skill 中，<span class="ax-mono"><%= mitCount %></span> 个以 MIT 许可发布；<code>hexo-blog-post</code> 未指定开源许可，不能按 MIT 分发。</p>
+    </div>
+  </section>
+
+  <section class="ax-section" aria-labelledby="ax-skills-install-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-skills-install-title">如何获取</h2>
+        <p>手动安装，不依赖管理工具。</p>
+      </div>
+      <div class="ax-skills-install">
+        <ol class="ax-skills-steps">
+          <li>
+            <span class="ax-skills-steps__num" aria-hidden="true">01</span>
+            <div class="ax-skills-steps__body">
+              <h3>获取仓库</h3>
+              <p><code>git clone https://github.com/aster-xu-lab/skills</code>，或下载对应的 Skill 目录。</p>
+            </div>
+          </li>
+          <li>
+            <span class="ax-skills-steps__num" aria-hidden="true">02</span>
+            <div class="ax-skills-steps__body">
+              <h3>放入宿主的 skills 目录</h3>
+              <p>Claude Code 个人级 <code>~/.claude/skills/&lt;name&gt;/</code>，项目级 <code>.claude/skills/&lt;name&gt;/</code>；其他宿主按各自的 skills 目录约定放置。</p>
+            </div>
+          </li>
+          <li>
+            <span class="ax-skills-steps__num" aria-hidden="true">03</span>
+            <div class="ax-skills-steps__body">
+              <h3>可选：批量管理</h3>
+              <p>CC Switch 仅用于批量管理，不是安装前置，也不是必需依赖。</p>
+            </div>
+          </li>
+        </ol>
+
+        <aside class="ax-skills-safety" aria-labelledby="ax-skills-safety-title">
+          <h3 class="ax-skills-safety__title" id="ax-skills-safety-title">安全提示</h3>
+          <p>Skill 可携带脚本。安装前先读 <code>SKILL.md</code> 与 <code>scripts/</code>，确认它会读写什么、在什么条件下执行。</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="ax-section" aria-labelledby="ax-skills-verify-title">
+    <div class="ax-container">
+      <div class="ax-section-head">
+        <h2 id="ax-skills-verify-title">验证边界</h2>
+        <p>已核对与尚未验证分开列出。</p>
+      </div>
+      <div class="ax-skills-verify">
+        <div class="ax-skills-verify__col">
+          <h3><span class="ax-skills-verify__mark ax-skills-verify__mark--done" aria-hidden="true"></span>已核对</h3>
+          <ul>
+            <li>公开内容适配：面向公开读者的文案与信息取舍已完成。</li>
+            <li>结构与引用：页面结构、仓库地址与安装路径引用已检查。</li>
+          </ul>
+        </div>
+        <div class="ax-skills-verify__col">
+          <h3><span class="ax-skills-verify__mark" aria-hidden="true"></span>尚未验证</h3>
+          <ul>
+            <li>真实项目效果：尚未在真实项目中完整跑过。</li>
+            <li>宿主自动路由与跨宿主行为。</li>
+            <li>配置维护类 Skill 在真实用户目录、Windows、软链与 CC Switch 安装副本上的表现。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
